@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "74700019078",
+    "project_id": "estocar-flutter",
+    "storage_bucket": "estocar-flutter.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:74700019078:android:90c83c1a6703febdb94807",
+        "android_client_info": {
+          "package_name": "com.estocar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDREyHVuU0omHP0FTZwTYAf2issEyshkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

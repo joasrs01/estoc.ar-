@@ -1,4 +1,4 @@
-package com.example.telas_app
+package com.estocar
 
 import io.flutter.embedding.android.FlutterActivity
 

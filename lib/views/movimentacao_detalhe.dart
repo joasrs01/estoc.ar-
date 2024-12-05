@@ -4,7 +4,8 @@ class MovimentacaoDetalhe extends StatelessWidget {
   final int produtoId;
   final int estoqueId;
 
-  MovimentacaoDetalhe({
+  const MovimentacaoDetalhe({
+    super.key,
     required this.produtoId,
     required this.estoqueId,
   });

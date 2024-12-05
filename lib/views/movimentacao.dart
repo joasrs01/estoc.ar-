@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:telas_app/telas/movimentacao_detalhe.dart';
+import 'package:telas_app/views/movimentacao_detalhe.dart';
 
 class Movimentacao extends StatefulWidget {
   const Movimentacao({super.key});
@@ -101,7 +101,7 @@ class _MovimentacaoState extends State<Movimentacao> {
                               children: [
                                 Text(
                                     '#${index + 1} - Produto Teste ${index + 1}'),
-                                Text('#5 - Estoque Teste 5'),
+                                const Text('#5 - Estoque Teste 5'),
                               ],
                             ),
                             const SizedBox(height: 8),

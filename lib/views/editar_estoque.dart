@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:telas_app/telas/listar_produtos.dart';
+import 'adicionar_estoque.dart';
+import 'listar_estoques.dart';
 
-class AdicionarProduto extends StatelessWidget {
-  const AdicionarProduto({super.key});
+class EditarEstoque extends StatelessWidget {
+  final String estoque;
+
+  const EditarEstoque({super.key, required this.estoque});
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController nomeController = TextEditingController();
     final TextEditingController descricaoController = TextEditingController();
-    final TextEditingController custoController = TextEditingController();
+    final TextEditingController localizacaoController = TextEditingController();
+    bool isAtivado = true;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Adicionar Produto'),
+        title: Text(estoque),
         centerTitle: true,
         titleTextStyle: const TextStyle(
           color: Colors.white,
@@ -41,50 +44,43 @@ class AdicionarProduto extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextField(
-                controller: nomeController,
-                decoration: const InputDecoration(
-                  labelText: 'Nome do Produto',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              const SizedBox(height: 16),
-              TextField(
                 controller: descricaoController,
                 maxLines: 5,
                 decoration: const InputDecoration(
-                  labelText: 'Descrição do Produto',
+                  labelText: 'Editar Descrição',
                   border: OutlineInputBorder(),
-                ),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton.icon(
-                onPressed: () {
-                  print('Adicionar imagem');
-                },
-                icon: const Icon(Icons.image),
-                label: const Text('Adicionar Imagem'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 4, 57, 89),
-                  foregroundColor: Colors.white,
                 ),
               ),
               const SizedBox(height: 16),
               TextField(
-                controller: custoController,
-                keyboardType: TextInputType.number,
+                controller: localizacaoController,
                 decoration: const InputDecoration(
-                  labelText: 'Custo do Produto',
+                  labelText: 'Editar Localização',
                   border: OutlineInputBorder(),
                 ),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Situação do Estoque (Ativado/Desativado)'),
+                  Switch(
+                    value: isAtivado,
+                    onChanged: (value) {
+                      isAtivado = value;
+                      print(
+                          isAtivado ? 'Estoque ativado' : 'Estoque desativado');
+                    },
+                  ),
+                ],
               ),
               const SizedBox(height: 32),
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    print('Produto registrado');
+                    print('Estoque editado');
                     Navigator.pop(context);
                   },
-                  child: const Text('Registrar Produto'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 4, 57, 89),
                     foregroundColor: Colors.white,
@@ -96,6 +92,7 @@ class AdicionarProduto extends StatelessWidget {
                       fontSize: 18,
                     ),
                   ),
+                  child: const Text('Editar'),
                 ),
               ),
             ],
@@ -121,14 +118,14 @@ class AdicionarProduto extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const ListarProdutos(),
+                builder: (context) => const ListarEstoques(),
               ),
             );
           } else if (index == 1) {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const AdicionarProduto(),
+                builder: (context) => const AdicionarEstoque(),
               ),
             );
           }
