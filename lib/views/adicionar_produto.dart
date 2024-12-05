@@ -1,40 +1,66 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'listar_produtos.dart';
-import 'adicionar_produto.dart';
+// import 'package:image_picker/image_picker.dart';
+import 'package:telas_app/classes/produto.dart';
+import 'package:telas_app/util/util.dart';
+import 'package:telas_app/views/listar_produtos.dart';
 
-class EditarProduto extends StatelessWidget {
-  final String produto;
+class AdicionarProduto extends StatefulWidget {
+  const AdicionarProduto({super.key});
 
-  const EditarProduto({super.key, required this.produto});
+  @override
+  _AdicionarProduto createState() => _AdicionarProduto();
+}
+
+class _AdicionarProduto extends State<AdicionarProduto> {
+  File? oImagemSelecionada;
+
+  // Future<File?> selecionarImagem() async {
+  //   File? _imagem;
+  //   final picker = ImagePicker();
+
+  //   final arquivoSelecionado =
+  //       await picker.pickImage(source: ImageSource.gallery);
+
+  //   if (arquivoSelecionado != null) {
+  //     setState(() {
+  //       _imagem = File(arquivoSelecionado.path);
+  //     });
+  //   }
+
+  //   return _imagem;
+  // }
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController nomeController = TextEditingController();
     final TextEditingController descricaoController = TextEditingController();
     final TextEditingController custoController = TextEditingController();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(produto),
-        titleTextStyle: TextStyle(
+        title: const Text('Adicionar Produto'),
+        centerTitle: true,
+        titleTextStyle: const TextStyle(
           color: Colors.white,
           fontSize: 20,
         ),
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.white,
         ),
-        backgroundColor: Color.fromARGB(255, 4, 57, 89),
-        centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(
               Icons.person,
-              color: Color.fromARGB(255, 255, 255, 255),
+              color: Colors.white,
             ),
             onPressed: () {
               print('Ícone de usuário clicado');
             },
           ),
         ],
+        backgroundColor: const Color.fromARGB(255, 4, 57, 89),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -43,20 +69,29 @@ class EditarProduto extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextField(
+                controller: nomeController,
+                decoration: const InputDecoration(
+                  labelText: 'Nome do Produto',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 16),
+              TextField(
                 controller: descricaoController,
                 maxLines: 5,
                 decoration: const InputDecoration(
-                  labelText: 'Editar Descrição',
+                  labelText: 'Descrição do Produto',
                   border: OutlineInputBorder(),
                 ),
               ),
               const SizedBox(height: 16),
               ElevatedButton.icon(
-                onPressed: () {
-                  print('Editar imagem');
+                onPressed: () async {
+                  //oImagemSelecionada = await selecionarImagem();
+                  print('imagem selecionar');
                 },
                 icon: const Icon(Icons.image),
-                label: const Text('Editar Imagem'),
+                label: const Text('Adicionar Imagem'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 4, 57, 89),
                   foregroundColor: Colors.white,
@@ -67,18 +102,27 @@ class EditarProduto extends StatelessWidget {
                 controller: custoController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                  labelText: 'Editar Custo do Produto',
+                  labelText: 'Custo do Produto',
                   border: OutlineInputBorder(),
                 ),
               ),
               const SizedBox(height: 32),
               Center(
                 child: ElevatedButton(
-                  onPressed: () {
-                    print('Produto editado');
-                    Navigator.pop(context);
+                  onPressed: () async {
+                    if (await Produto.adicionarProduto(
+                        nomeController.text,
+                        descricaoController.text,
+                        double.parse(custoController.text),
+                        oImagemSelecionada)) {
+                      Util.apresentarMensagemRodape(context,
+                          "Produto ${nomeController.text} adicionado com sucesso!");
+                      Navigator.pop(context);
+                    } else {
+                      Util.apresentarMensagemRodape(context,
+                          "Não foi possível cadastrar o produto ${nomeController.text}.");
+                    }
                   },
-                  child: const Text('Editar'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 4, 57, 89),
                     foregroundColor: Colors.white,
@@ -90,6 +134,7 @@ class EditarProduto extends StatelessWidget {
                       fontSize: 18,
                     ),
                   ),
+                  child: const Text('Registrar Produto'),
                 ),
               ),
             ],
@@ -99,7 +144,7 @@ class EditarProduto extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white70,
-        backgroundColor: Color.fromARGB(255, 4, 57, 89),
+        backgroundColor: const Color.fromARGB(255, 4, 57, 89),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
@@ -118,14 +163,14 @@ class EditarProduto extends StatelessWidget {
                 builder: (context) => const ListarProdutos(),
               ),
             );
-          } else if (index == 1) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const AdicionarProduto(),
-              ),
-            );
-          }
+          } // else if (index == 1) {
+          //   Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //       builder: (context) => const AdicionarProduto(),
+          //     ),
+          //   );
+          //}
         },
       ),
     );

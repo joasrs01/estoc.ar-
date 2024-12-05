@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../classes/produto.dart';
 import 'editar_produto.dart';
 import 'adicionar_produto.dart';
 
@@ -12,19 +13,42 @@ class ListarProdutos extends StatefulWidget {
 class _ListarProdutosState extends State<ListarProdutos> {
   final TextEditingController _searchController = TextEditingController();
 
-  final List<Map<String, dynamic>> produtos = [
-    {'nome': 'Produto 1', 'imagem': 'images/perfume.png', 'custo': 19.99},
-    {'nome': 'Produto 2', 'imagem': 'images/perfume.png', 'custo': 29.99},
-    {'nome': 'Produto 3', 'imagem': 'images/perfume.png', 'custo': 9.99},
-    {'nome': 'Produto 4', 'imagem': 'images/perfume.png', 'custo': 39.99},
-    {'nome': 'Produto 5', 'imagem': 'images/perfume.png', 'custo': 49.99},
-  ];
+  // final List<Map<String, dynamic>> produtos = [
+  //   {
+  //     'nome': 'Produto 1',
+  //     'imagem': 'assets/images/perfume.png',
+  //     'custo': 19.99
+  //   },
+  //   {
+  //     'nome': 'Produto 2',
+  //     'imagem': 'assets/images/perfume.png',
+  //     'custo': 29.99
+  //   },
+  //   {'nome': 'Produto 3', 'imagem': 'assets/images/perfume.png', 'custo': 9.99},
+  //   {
+  //     'nome': 'Produto 4',
+  //     'imagem': 'assets/images/perfume.png',
+  //     'custo': 39.99
+  //   },
+  //   {
+  //     'nome': 'Produto 5',
+  //     'imagem': 'assets/images/perfume.png',
+  //     'custo': 49.99
+  //   },
+  // ];
+
+  List<Map<String, dynamic>> produtos = [];
+
+  void carregarProdutos() async {
+    produtos = await Produto.buscarTodosProdutos();
+  }
 
   List<Map<String, dynamic>> produtosFiltrados = [];
 
   @override
-  void initState() {
+  void initState() async {
     super.initState();
+    //produtos = await Produto.buscarTodosProdutos();
     produtosFiltrados = produtos;
     _searchController.addListener(_filterProdutos);
   }
@@ -107,7 +131,7 @@ class _ListarProdutosState extends State<ListarProdutos> {
                     style: const TextStyle(fontSize: 14),
                   ),
                   leading: Image.asset(
-                    produto['imagem'],
+                    'assets/images/perfume.png',
                     fit: BoxFit.cover,
                   ),
                   onTap: () {
@@ -153,7 +177,7 @@ class _ListarProdutosState extends State<ListarProdutos> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const AdicionarProduto(),
+                builder: (context) => AdicionarProduto(),
               ),
             );
           }

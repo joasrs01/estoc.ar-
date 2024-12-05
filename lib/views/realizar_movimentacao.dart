@@ -68,7 +68,7 @@ class _RealizarMovimentacao extends State<RealizarMovimentacao> {
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             const Text('Estoque',
                 style: TextStyle(fontWeight: FontWeight.bold)),
             Padding(
@@ -141,14 +141,13 @@ class _RealizarMovimentacao extends State<RealizarMovimentacao> {
                 ),
               ],
             ),
-            Spacer(),
+            const Spacer(),
             Center(
               child: ElevatedButton(
                 onPressed: () {
                   print('Movimentação realizada!');
                   Navigator.pop(context);
                 },
-                child: const Text('Realizar Movimentação'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 4, 57, 89),
                   foregroundColor: Colors.white,
@@ -160,6 +159,7 @@ class _RealizarMovimentacao extends State<RealizarMovimentacao> {
                     fontSize: 18,
                   ),
                 ),
+                child: const Text('Realizar Movimentação'),
               ),
             ),
           ],

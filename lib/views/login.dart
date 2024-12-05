@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:telas_app/telas/home.dart';
+import 'package:telas_app/views/cadastro_usuario.dart';
+import 'package:telas_app/views/home.dart';
+
+import '../../util/util.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
   @override
   Widget build(BuildContext context) {
+    final TextEditingController usuarioController = TextEditingController();
+    final TextEditingController senhaController = TextEditingController();
+
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.only(top: 60, left: 40, right: 40),
@@ -13,9 +19,9 @@ class Login extends StatelessWidget {
           children: <Widget>[
             SizedBox(
               width: 128,
-              height: 128,
+              height: 140,
               child: Image.asset(
-                "../assets/images/logo_bambu.png",
+                "assets/images/logo_bambu.png",
                 width: 406,
                 fit: BoxFit.cover,
               ),
@@ -25,9 +31,10 @@ class Login extends StatelessWidget {
             ),
             TextFormField(
               // autofocus: true,
+              controller: usuarioController,
               keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
-                labelText: "E-mail",
+                labelText: "Usuário",
                 labelStyle: TextStyle(
                   color: Colors.black38,
                   fontWeight: FontWeight.w400,
@@ -40,6 +47,7 @@ class Login extends StatelessWidget {
               height: 10,
             ),
             TextFormField(
+              controller: senhaController,
               keyboardType: TextInputType.text,
               obscureText: true,
               decoration: const InputDecoration(
@@ -86,13 +94,17 @@ class Login extends StatelessWidget {
                       )
                     ],
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Home(),
-                      ),
-                    );
+                  onPressed: () async {
+                    var autenticado = await Util.autenticacao.autenticarUsuario(
+                        usuarioController.text, senhaController.text);
+
+                    if (autenticado) {
+                      Util.apresentarMensagemRodape(context, "Bem vindo!");
+                      Util.NavegarDireitaPara(context, const Home());
+                    } else {
+                      Util.apresentarMensagemRodape(context,
+                          "Não foi possível efetuar o login, usuario ou senha incorretos!");
+                    }
                   },
                 ),
               ),
@@ -104,16 +116,11 @@ class Login extends StatelessWidget {
               height: 40,
               child: TextButton(
                 child: const Text(
-                  "Cadastre-se",
+                  "ou Cadastre-se!",
                   textAlign: TextAlign.center,
                 ),
                 onPressed: () {
-                  //Navigator.push(
-                  // context,
-                  // MaterialPageRoute(
-                  //   builder: (context) => CadastroUsuario(),
-                  // ),
-                  //);
+                  Util.NavegarDireitaPara(context, const CadastroUsuario());
                 },
               ),
             ),

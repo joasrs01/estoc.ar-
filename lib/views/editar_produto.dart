@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
-import 'adicionar_estoque.dart';
-import 'listar_estoques.dart';
+import 'listar_produtos.dart';
+import 'adicionar_produto.dart';
 
-class EditarEstoque extends StatelessWidget {
-  final String estoque;
+class EditarProduto extends StatelessWidget {
+  final String produto;
 
-  const EditarEstoque({super.key, required this.estoque});
+  const EditarProduto({super.key, required this.produto});
 
   @override
   Widget build(BuildContext context) {
     final TextEditingController descricaoController = TextEditingController();
-    final TextEditingController localizacaoController = TextEditingController();
-    bool isAtivado = true;
+    final TextEditingController custoController = TextEditingController();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(estoque),
-        centerTitle: true,
+        title: Text(produto),
         titleTextStyle: const TextStyle(
           color: Colors.white,
           fontSize: 20,
@@ -24,18 +22,19 @@ class EditarEstoque extends StatelessWidget {
         iconTheme: const IconThemeData(
           color: Colors.white,
         ),
+        backgroundColor: const Color.fromARGB(255, 4, 57, 89),
+        centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(
               Icons.person,
-              color: Colors.white,
+              color: Color.fromARGB(255, 255, 255, 255),
             ),
             onPressed: () {
               print('Ícone de usuário clicado');
             },
           ),
         ],
-        backgroundColor: const Color.fromARGB(255, 4, 57, 89),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -52,36 +51,33 @@ class EditarEstoque extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              TextField(
-                controller: localizacaoController,
-                decoration: const InputDecoration(
-                  labelText: 'Editar Localização',
-                  border: OutlineInputBorder(),
+              ElevatedButton.icon(
+                onPressed: () {
+                  print('Editar imagem');
+                },
+                icon: const Icon(Icons.image),
+                label: const Text('Editar Imagem'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 4, 57, 89),
+                  foregroundColor: Colors.white,
                 ),
               ),
               const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('Situação do Estoque (Ativado/Desativado)'),
-                  Switch(
-                    value: isAtivado,
-                    onChanged: (value) {
-                      isAtivado = value;
-                      print(
-                          isAtivado ? 'Estoque ativado' : 'Estoque desativado');
-                    },
-                  ),
-                ],
+              TextField(
+                controller: custoController,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  labelText: 'Editar Custo do Produto',
+                  border: OutlineInputBorder(),
+                ),
               ),
               const SizedBox(height: 32),
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    print('Estoque editado');
+                    print('Produto editado');
                     Navigator.pop(context);
                   },
-                  child: const Text('Editar'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 4, 57, 89),
                     foregroundColor: Colors.white,
@@ -93,6 +89,7 @@ class EditarEstoque extends StatelessWidget {
                       fontSize: 18,
                     ),
                   ),
+                  child: const Text('Editar'),
                 ),
               ),
             ],
@@ -118,14 +115,14 @@ class EditarEstoque extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const ListarEstoques(),
+                builder: (context) => const ListarProdutos(),
               ),
             );
           } else if (index == 1) {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const AdicionarEstoque(),
+                builder: (context) => AdicionarProduto(),
               ),
             );
           }

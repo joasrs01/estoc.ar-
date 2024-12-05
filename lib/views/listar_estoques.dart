@@ -55,7 +55,7 @@ class _ListarEstoquesState extends State<ListarEstoques> {
         iconTheme: const IconThemeData(
           color: Colors.white,
         ),
-        backgroundColor: Color.fromARGB(255, 4, 57, 89),
+        backgroundColor: const Color.fromARGB(255, 4, 57, 89),
         actions: [
           IconButton(
             icon: const Icon(
@@ -118,7 +118,7 @@ class _ListarEstoquesState extends State<ListarEstoques> {
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white70,
-        backgroundColor: Color.fromARGB(255, 4, 57, 89),
+        backgroundColor: const Color.fromARGB(255, 4, 57, 89),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
